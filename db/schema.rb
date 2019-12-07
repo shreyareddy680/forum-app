@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_07_184043) do
+ActiveRecord::Schema.define(version: 2019_12_07_201050) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "text"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_12_07_184043) do
     t.text "summary"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "user"
   end
 
   add_foreign_key "comments", "questions"

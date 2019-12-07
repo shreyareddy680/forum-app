@@ -10,6 +10,11 @@
   <%= @question.summary %>
 </p>
 
+<p>
+  <strong>Created By:</strong>
+  <%= @question.user %>
+</p>
+
 <h2>Comments</h2>
 <%= render @question.comments %>
 
