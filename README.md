@@ -3,20 +3,22 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Steps for installation:
+Things you may want to cover:
 
-* clone the repository
+* Ruby version
 
-* run bundle install
+* System dependencies
 
-* set up DB: rake db:create
+* Configuration
 
-* rake db:migarte
+* Database creation
 
-* rake db:seed
+* Database initialization
 
-* to run Application: rails s
+* How to run the test suite
 
-* To run RSPECS: rspec
+* Services (job queues, cache servers, search engines, etc.)
 
-* To check lints: lint
+* Deployment instructions
+
+* ...
