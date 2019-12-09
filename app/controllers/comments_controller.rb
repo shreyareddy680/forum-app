@@ -1,74 +1,31 @@
 class CommentsController < ApplicationController
-  before_action :find_commentable, only: :create
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :find_commentable
 
-  # GET /comments
-  # GET /comments.json
-  def index
-    @comments = Comment.all
-  end
+    def new
+      @comment = Comment.new
+    end
 
-  # GET /comments/1
-  # GET /comments/1.json
-  def show
-  end
-
-  # GET /comments/new
-  def new
-    @comment = Comment.new
-  end
-
-  # GET /comments/1/edit
-  def edit
-  end
-
-  # POST /comments
-  # POST /comments.json
-  def create
-      @commentable.comments.build(comment_params)
-      @commentable.save
-  end
-
-  # PATCH/PUT /comments/1
-  # PATCH/PUT /comments/1.json
-  def update
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comment }
+    def create
+      @comment = @commentable.comments.new(comment_params)
+      if @comment.save
+        if(params[:comment][:question_id])
+          redirect_to Question.find_by_id(params[:comment][:question_id]) 
+        else
+          redirect_to @commentable  
+        end
       else
-        format.html { render :edit }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        redirect_to @commentable
       end
     end
-  end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.json
-  def destroy
-    @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+    private
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def comment_params
       params.require(:comment).permit(:content)
     end
 
     def find_commentable
-      if params[:comment_id]
-        @commentable = Comment.find_by_id(params[:comment_id])
-      elsif params[:question_id]
-        @commentable = Question.find_by_id(params[:question_id])
-      end
+      @commentable = Comment.find_by_id(params[:comment_id]) if params[:comment_id]
+      @commentable = Question.find_by_id(params[:question_id]) if params[:question_id]
     end
-end
+  end

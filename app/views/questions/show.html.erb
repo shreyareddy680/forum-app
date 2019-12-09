@@ -11,13 +11,17 @@
 </p>
 
 <p>
-  <strong>Author:</strong>
-  <%= @question.author %>
+  <strong>Submitted By:</strong>  <%= @question.author%>
+  <small><%= time_ago_in_words(@question.created_at) %> ago</small>
 </p>
 
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>
+<h3>Comments</h3>
+
+  <%= form_for [@question, Comment.new] do |f| %>
+  <%= f.text_area :content, placeholder: "Add a comment" %><br/>
+  <%= f.submit "Add Comment" %>
+<% end %>
 
 <ul>
-<%= render partial: 'comments/comment', collection: @question.comments %>
+  <%= render @question.comments %>
 </ul>
